@@ -85,10 +85,10 @@ contactrouter.delete("/emptycontacts", async (req, res) => {
     }).clone();
 });
 
-// app.listen(process.env.PORT || 3000, () => {//
+// app.listen(port, () => {//
 //   console.log(`Example app listening at http://localhost:${port}`);
 // });
-console.log("here", process.env.MONGODB_URI)
+// console.log("here", process.env.MONGODB_URI)
 mongoose.connect(
     process.env.MONGODB_URI
   )
