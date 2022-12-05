@@ -85,6 +85,9 @@ contactrouter.delete("/emptycontacts", async (req, res) => {
     }).clone();
 });
 
+
+
+
 // //approach 4
 // const mongodb = require("mongodb")
 
@@ -96,11 +99,11 @@ contactrouter.delete("/emptycontacts", async (req, res) => {
 //   console.log(`Example app listening at http://localhost:${port}`);
 // });
 // console.log("here", process.env.MONGODB_URI)
-//Approach 1
-mongoose.connect(
-    process.env.MONGODB_URI,
-{ useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("db connected"));
+// //Approach 1
+// mongoose.connect(
+//     process.env.MONGODB_URI,
+// { useNewUrlParser: true, useUnifiedTopology: true })
+//   .then(() => console.log("db connected"));
 
 
 
@@ -139,9 +142,62 @@ let conn = null;
 module.exports = app;
 // module.exports.handler=serverless(app)
 
+var co = require('co');
+let conn = null;
 
 const handler = serverless(app);
 module.exports.handler = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+  run()
   const result = await handler(event, context);
   return result;
 };
+
+//approach 5
+// var co = require('co');
+// // var mongoose = require('mongoose');
+
+// let conn = null;
+
+// const uri = 'mongodb://username:password@mongourl:port/databaseName';
+
+// exports.handler = function(event, context) {
+
+//   context.callbackWaitsForEmptyEventLoop = false;
+
+//   run()
+//     // then(res => {
+//     //   callback(null, res);
+//     // }).
+//     // catch(error => callback(error));
+// };
+
+function run() {
+  return co(function*() {
+
+    if (conn == null) {
+      yield mongoose.createConnection(process.env.MONGODB_URI, {
+        bufferCommands: false,
+        bufferMaxEntries: 0
+      }).then(() => console.log("db connected"));
+      // conn.model('collectionName', new mongoose.Schema({
+      //   schedule: String,
+      //   occupancy: Number,
+      //   count: Number,
+      //   price: Number,
+      //   time: String,
+      //   link: String
+      // }));
+    }
+
+    // const M = conn.model('collectionName');
+
+    // const doc = yield M.find();
+    // const response = {
+    //   statusCode: 200,
+    //   body: JSON.stringify(doc)
+    // };
+    // return response;
+  }
+  );
+}
