@@ -17,7 +17,10 @@
     "webpack-cli": "^5.0.0",
     "webpack-dev-middleware": "^5.3.3",
     "webpack-dev-server": "^4.11.1",
-    "webpack-hot-middleware": "^2.25.3"
+    "webpack-hot-middleware": "^2.25.3",
+    "serverless-http": "^2.3.0",
+    "netlify-lambda": "^1.6.3"
+
   },
   "author": "",
   "license": "ISC",
@@ -34,11 +37,10 @@
     "express-fileupload": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.3",
-    "netlify-lambda": "^1.6.3",
     "nodemon": "^2.0.20",
     "path-browserify": "^0.0.1",
-    "querystring-es3": "^0.2.1",
-    "serverless-http": "^2.3.0"
+    "querystring-es3": "^0.2.1"
+ 
   },
   "scripts": {
     "start": "nodemon ./express/server.js",
