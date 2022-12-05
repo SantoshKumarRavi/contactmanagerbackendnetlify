@@ -9,6 +9,7 @@ const routes = require("../routes/userRoutes");
 const contactrouter = express.Router();
 const {API_ROOT}=require("../config")
 app.use(API_ROOT,routes);
+require('dotenv').config()
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -87,7 +88,7 @@ contactrouter.delete("/emptycontacts", async (req, res) => {
 // app.listen(process.env.PORT || 3000, () => {//
 //   console.log(`Example app listening at http://localhost:${port}`);
 // });
-
+console.log("here", process.env.MONGODB_URI)
 mongoose.connect(
     process.env.MONGODB_URI
   )
