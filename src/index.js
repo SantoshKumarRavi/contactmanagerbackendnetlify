@@ -1,16 +1,20 @@
 const express = require("express");
 const app = express();
+const serverless=require("serverless-http")
 const port = 8081;
 const mongoose = require("mongoose");
 const contact = require("../datamodel/contacts");
 const bodyParser = require("body-parser");
 const routes = require("../routes/userRoutes");
-app.use(routes);
+const contactrouter = express.Router();
+const {API_ROOT}=require("../config")
+app.use(API_ROOT,routes);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+app.use(API_ROOT,contactrouter)
 
 const cors = require("cors");
 app.use(
@@ -19,7 +23,12 @@ app.use(
   })
 );
 
-app.post("/contacts", async (req, res) => {
+contactrouter.get("/",(req,res)=>{
+  console.log("conncteding g    ==>")
+  res.send("hi da")
+})
+
+contactrouter.post("/contacts", async (req, res) => {
   let updated = req.body.data;
   let id = req.body.userId;
   for (let i = 0; i < updated.length; i++) {
@@ -35,7 +44,7 @@ app.post("/contacts", async (req, res) => {
   });
 });
 
-app.get("/contacts/:id", async (req, res) => {
+contactrouter.get("/contacts/:id", async (req, res) => {
   let paramId = req.params["id"];
   const strid = paramId.valueOf();
   await contact
@@ -47,7 +56,7 @@ app.get("/contacts/:id", async (req, res) => {
     }).clone();
 });
 
-app.delete("/contacts", async (req, res) => {
+contactrouter.delete("/contacts", async (req, res) => {
   let deleteIdArray = req.body;
   deleteIdArray = deleteIdArray.map((x) => mongoose.Types.ObjectId(x));
   await contact
@@ -62,7 +71,7 @@ app.delete("/contacts", async (req, res) => {
 });
 
 //this is now i used for postman deleteall ...
-app.delete("/emptycontacts", async (req, res) => {
+contactrouter.delete("/emptycontacts", async (req, res) => {
   //temporary api call for delete // by putting if req.body,we can make one api call for delete and delerte all..
   await contact
     .deleteMany({}, function (err, delCount) {
@@ -75,11 +84,14 @@ app.delete("/emptycontacts", async (req, res) => {
     }).clone();
 });
 
-app.listen(process.env.PORT || 3000, () => {//
-  console.log(`Example app listening at http://localhost:${port}`);
-});
+// app.listen(process.env.PORT || 3000, () => {//
+//   console.log(`Example app listening at http://localhost:${port}`);
+// });
 
 mongoose.connect(
     process.env.MONGODB_URI
   )
   .then(() => console.log("db connected"));
+
+module.exports = app;
+module.exports.handler=serverless(app)
