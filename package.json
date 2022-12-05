@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "main": "functions/server.js",
   "devDependencies": {
-    "netlify-lambda": "^1.6.3",
-    "serverless-http": "^2.3.0"
   },
   "author": "",
   "license": "ISC",
@@ -18,9 +16,12 @@
     "express": "^4.18.2",
     "express-fileupload": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
+    "mongodb-client-encryption": "^2.3.0",
     "mongoose": "^6.7.3",
     "nodemon": "^2.0.20",
-    "path-browserify": "^0.0.1"
+    "path-browserify": "^0.0.1",
+    "netlify-lambda": "^1.6.3",
+    "serverless-http": "^2.3.0"
   },
   "scripts": {
     "start": "nodemon ./express/server.js",
