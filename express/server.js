@@ -85,28 +85,33 @@ contactrouter.delete("/emptycontacts", async (req, res) => {
     }).clone();
 });
 
+// //approach 4
+// const mongodb = require("mongodb")
+
+// exports.handler = async function (event, context) {
+//   const client = await mongodb.connect(process.env.MONGODB_URI, { useUnifiedTopology: true })
+//   client.db().then(()=>console.log("DB connected"))
+// }
 // app.listen(port, () => {//
 //   console.log(`Example app listening at http://localhost:${port}`);
 // });
 // console.log("here", process.env.MONGODB_URI)
-//approach 1
-// mongoose.connect(
-//     process.env.MONGODB_URI
-//  , {
-//   useUnifiedTopology: true,
-//   useFindAndModify: false,
-//   useCreateIndex: true,
-//   useNewUrlParser: true
-// } )
-//   .then(() => console.log("db connected"));
+//Approach 1
+mongoose.connect(
+    process.env.MONGODB_URI)
+  .then(() => console.log("db connected"));
 
+
+
+/*
+Approch 3
 const connectDb = async (url) => {
 //  console.log(url, 'url to mongo atlas, connectDb');
   await mongoose.connect(url);
  };
  connectDb(process.env.MONGODB_URI)
- console.log(mongoose.connection.readyState, 'Ready state email');
-
+//  console.log(mongoose.connection.readyState, 'Ready state email');
+*/
 
 /*
 //Approach 2
@@ -131,4 +136,11 @@ let conn = null;
 // connect()
 */
 module.exports = app;
-module.exports.handler=serverless(app)
+// module.exports.handler=serverless(app)
+
+
+const handler = serverless(app);
+module.exports.handler = async (event, context) => {
+  const result = await handler(event, context);
+  return result;
+};
