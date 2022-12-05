@@ -91,7 +91,12 @@ contactrouter.delete("/emptycontacts", async (req, res) => {
 // console.log("here", process.env.MONGODB_URI)
 mongoose.connect(
     process.env.MONGODB_URI
-  )
+ , {
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+  useNewUrlParser: true
+} )
   .then(() => console.log("db connected"));
 
 module.exports = app;
