@@ -89,15 +89,46 @@ contactrouter.delete("/emptycontacts", async (req, res) => {
 //   console.log(`Example app listening at http://localhost:${port}`);
 // });
 // console.log("here", process.env.MONGODB_URI)
-mongoose.connect(
-    process.env.MONGODB_URI
- , {
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true,
-  useNewUrlParser: true
-} )
-  .then(() => console.log("db connected"));
+//approach 1
+// mongoose.connect(
+//     process.env.MONGODB_URI
+//  , {
+//   useUnifiedTopology: true,
+//   useFindAndModify: false,
+//   useCreateIndex: true,
+//   useNewUrlParser: true
+// } )
+//   .then(() => console.log("db connected"));
 
+const connectDb = async (url) => {
+//  console.log(url, 'url to mongo atlas, connectDb');
+  await mongoose.connect(url);
+ };
+ connectDb(process.env.MONGODB_URI)
+ console.log(mongoose.connection.readyState, 'Ready state email');
+
+
+/*
+//Approach 2
+let conn = null;
+// const uri = 'YOUR CONNECTION STRING HERE';
+
+// exports.connect = async function() {
+//   console.log("hi")
+
+//   if (conn == null) {
+//     conn = mongoose.connect(process.env.MONGODB_URI, {
+//       serverSelectionTimeoutMS: 5000
+//     }).then(() => mongoose).then(() => console.log("db connected"));
+    
+//     // `await`ing connection after assigning to the `conn` variable
+//     // to avoid multiple function calls creating new connections
+//     await conn;
+//   }
+
+//   return conn;
+// };
+// connect()
+*/
 module.exports = app;
 module.exports.handler=serverless(app)
