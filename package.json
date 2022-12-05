@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "main": "functions/server.js",
   "devDependencies": {
-    "serverless-http": "^2.3.0",
-    "netlify-lambda": "^1.6.3"
-
+    "netlify-lambda": "^1.6.3",
+    "serverless-http": "^2.3.0"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@mongodb-js/zstd": "^1.0.0",
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.1",
@@ -21,7 +21,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.3",
     "nodemon": "^2.0.20",
-    "path-browserify": "^0.0.1" 
+    "path-browserify": "^0.0.1"
   },
   "scripts": {
     "start": "nodemon ./express/server.js",
